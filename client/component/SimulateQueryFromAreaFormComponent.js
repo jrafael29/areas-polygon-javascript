@@ -44,10 +44,8 @@ export default new (class SimulateQueryFromAreaFormComponent {
     const queryParams = new URLSearchParams(query);
     const queryString = queryParams.toString();
     const urlWithQueryStrings = `${targetUrl}?${queryString}`;
-    console.log("urlWithQueryStrings", urlWithQueryStrings);
 
     const result = await fetch.getRequest(urlWithQueryStrings);
-    console.log("result", result)
     if (result.success && result.data.length) {
       const real = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
@@ -59,7 +57,6 @@ export default new (class SimulateQueryFromAreaFormComponent {
       return true;
     }
     alert("nenhuma area encontrada");
-    console.log("nenhuma area encontrada", result.data);
     // return false;
   }
 })();

@@ -37,6 +37,18 @@ O projeto está dividido em duas partes:
 #Server - Contem toda a API e parte de interação com o banco de dados.
 #Client - Contem toda a parte de visualização e interação com a api
 
+**Exemplo para checagem de área e distancia, respectivamente**
+
+// checar área
+```
+    curl -X GET -H "Content-Type: application/json"  http://127.0.0.1:3005/check-polygon-area?lat=9.814623&lng=-0.453186
+```
+
+// checar distancia (duas implementações: linha reta ou por rota de estrada)
+```
+    curl -X GET -H "Content-Type: application/json"  http://127.0.0.1:3005/check-distance?firstLat=9.814623&firstLng=-0.453186&secondLat=9.818682&secondLng=-0.324097
+```
+
 **Exemplo para inserção de dados via cURL**
 
 // buscar areas example

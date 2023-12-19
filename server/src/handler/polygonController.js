@@ -87,7 +87,6 @@ async function updateAreaCoordinates(req, res) {
 }
 
 async function checkPolygonArea(req, res) {
-  console.log("checar areas", req.query);
   const { lat, lng } = req.query;
 
   if (!lat || !lng) return res.json({ success: false }).end();
@@ -114,10 +113,11 @@ async function checkDistance(req, res) {
       return res.status(400).json({ error: true, message: "parametros inválidos" }).end();
 
       const turfDistanceService = new TurfDistanceService();
+      // o openRouteDistance requer chave de api no .env
       const openRouteDistanceService = new OpenRouteDistanceService();
       // use qualquer um dos use-cases para obter a distancia.
 
-      const getDistanceBetweenTwoPointsUseCase = new GetDistanceBetweenTwoPointsUseCase(openRouteDistanceService);
+      const getDistanceBetweenTwoPointsUseCase = new GetDistanceBetweenTwoPointsUseCase(turfDistanceService);
       const result = await getDistanceBetweenTwoPointsUseCase.execute(firstLat, firstLng, secondLat, secondLng)
 
       return res.status(200).json({ success: true, data: result }).end();

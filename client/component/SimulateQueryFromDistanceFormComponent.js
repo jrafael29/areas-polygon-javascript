@@ -49,23 +49,22 @@ export default new (class SimulateQueryFromDistanceFormComponent {
     const queryParams = new URLSearchParams(query);
     const queryString = queryParams.toString();
     const urlWithQueryStrings = `${targetUrl}?${queryString}`;
-    console.log("urlWithQueryStrings", urlWithQueryStrings);
+
 
     const result = await fetch.getRequest(urlWithQueryStrings);
-    console.log("result", result)
-    // if (result.success && result.data.length) {
-    //   const real = new Intl.NumberFormat('pt-BR', {
-    //     style: 'currency',
-    //     currency: 'BRL',
-    //     });
-    //   const notif = `O valor da área é: ${real.format(result.data[0].value)}`
-    //   alert(notif)
-    //   //   window.location.reload()
-    //   return true;
-    // }
-    // alert("nenhuma area encontrada");
-    // console.log("nenhuma area encontrada", result.data);
-    // return false;
+
+    if (result.success && result.data.length) {
+      const real = new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+        });
+      const notif = `O valor da área é: ${real.format(result.data[0].value)}`
+      alert(notif)
+      //   window.location.reload()
+      return true;
+    }
+    alert("nenhuma area encontrada");
+    return false;
   }
 })();
 
