@@ -1,0 +1,8 @@
+CREATE TABLE areas (
+    id serial primary key,
+    poly polygon not null,
+    description varchar(255),
+    value float not null
+    color varchar(60)
+    created_at datetime default now()
+);

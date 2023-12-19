@@ -1,0 +1,6 @@
+document.getElementById('firstLatInput').value = -23.63578164386152
+document.getElementById('firstLngInput').value = -46.54065690653744
+document.getElementById('secondLatInput').value = -23.613198990745662,
+document.getElementById('secondLngInput').value = -46.575505679359296
+
+

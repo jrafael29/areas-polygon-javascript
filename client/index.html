@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Poligono Área</title>
+    <!-- jquery -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <!-- bootstrap css -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    />
+    <!-- leaflet css -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <!-- leaflet-draw css -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css"
+    />
+
+  </head>
+  <body class="bg-light">
+    <div class="container p-5">
+      <div class="mb-3">
+        <button id="toggleSimulationVisibility" class="btn btn-sm btn-success">Alterar Simulação</button>
+      </div>
+      <div class="">
+        <form class="" name="simulateQueryFormName" id="simulateQueryFormId">
+          <h3 class="display-5">Simular busca por área</h3>
+          <small>Informe a localização do usuario final, para verificar o preço do frete para ele.</small>
+          <hr>
+          <div class="row">
+            <div class="form-group col-md-6 mb-3">
+              <label for="latInput" class="form-label">Latitude:</label>
+              <input type="text" required id="latInput" name="lat" class="form-control" placeholder="Insira uma latitude">
+            </div>
+            <div class="form-group col-md-6 mb-3">
+              <label for="lngInput" class="form-label">Longitude:</label>
+              <input type="text" required id="lngInput" name="lng" class="form-control" placeholder="Insira uma longitude">
+            </div>
+          </div>
+          <div class="form-group mb-3">
+            <button class="btn btn-sm btn-secondary w-100">Buscar</button>
+          </div>
+        </form>
+        <form class="d-none" name="simulateQueryFromDistanceFormName" id="simulateQueryFromDistanceFormId">
+          <h3 class="display-5">Simular busca por distância</h3>
+          <small>Informe a localização da loja e do usuario final, para verificar o preço do frete para ele.</small>
+          <hr>
+          <div class="row">
+            <div class="form-group col-md-6 mb-3">
+              <label for="firstLatInput" class="form-label">Latitude Inicial:</label>
+              <input type="text" required id="firstLatInput" name="first-lat" class="form-control" placeholder="Insira a primeira latitude">
+            </div>
+            <div class="form-group col-md-6 mb-3">
+              <label for="firstLngInput" class="form-label">Longitude Inicial:</label>
+              <input type="text" required id="firstLngInput" name="first-lng" class="form-control" placeholder="Insira a primeira longitude">
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-6 mb-3">
+              <label for="secondLatInput" class="form-label">Latitude Final:</label>
+              <input type="text" required id="secondLatInput" name="second-lat" class="form-control" placeholder="Insira a segunda latitude">
+            </div>
+            <div class="form-group col-md-6 mb-3">
+              <label for="secondLngInput" class="form-label">Longitude Final:</label>
+              <input type="text" required id="secondLngInput" name="second-lng" class="form-control" placeholder="Insira a segunda longitude">
+            </div>
+          </div>
+          <div class="form-group mb-3">
+            <button class="btn btn-sm btn-secondary w-100">Buscar</button>
+          </div>
+
+        </form>
+      </div>
+      <hr>
+
+
+      <div class="d-flex flex-column flex-md-row mt-5">
+        <div class="col col-md-9">
+          <div style="height: 500px" id="map"></div>
+        </div>
+        <div class="col col-md-3 p-3">
+          <h1 class="display-6">Cadastrar área</h1>
+          <hr>
+          <div class="d-flex justify-content-center" id="control-area">
+            <form id="primaryFormId" name="primaryFormName" action="">
+              <div class="form-group mb-3">
+                <label class="form-label" for="valueArea"
+                  >Valor da área <small class="text-muted">em R$</small></label
+                >
+                <input
+                  step="0.1"
+                  class="form-control"
+                  required
+                  type="number"
+                  name="valueArea"
+                  id="valueArea"
+                  placeholder="Insira um valor para a área"
+                />
+              </div>
+              <div class="form-group mb-3">
+                <label class="form-label" for="description"
+                  >Descrição <small class="text-muted">opcional</small></label
+                >
+                <input
+                  class="form-control"
+                  type="text"
+                  required
+                  name="description"
+                  id="description"
+                  placeholder="Insira uma descrição para a área"
+
+                />
+              </div>
+
+              <div class="form-group mb-3">
+                <label class="form-label" for="description"
+                  >Selecione uma cor para a àrea <small class="text-muted">opcional</small></label
+                >
+                <input class="form-control" type="color" name="colorArea" id="colorArea">
+              </div>
+
+              <div class="form-group">
+                <button class="btn btn-secondary w-100" type="submit">
+                  Salvar área
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <!-- àrea das localizações salvas -->
+        <div id="primary-output" class="row p-3"></div>
+      </div>
+    </div>
+    <!-- leaflet js -->
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <!-- leaflet draw -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.js"></script>
+    <script type="module" src="index.js"></script>
+  </body>
+</html>
