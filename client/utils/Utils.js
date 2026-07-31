@@ -19,4 +19,15 @@ export default class Utils {
       const id = Object.values(leafletEvent.layers._layers)[0].id;
       return id;
     }
+
+    static formDurationInMinutes(durationInMinutes) {
+      const horas = Math.floor(durationInMinutes / 60);
+      const minutos = Math.floor(durationInMinutes % 60);
+
+      if (horas === 0) {
+        return `${minutos}m`;
+      }
+      return `${horas}h ${minutos}m`;
+
+    }
   }

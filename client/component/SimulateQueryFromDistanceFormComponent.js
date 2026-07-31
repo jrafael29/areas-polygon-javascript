@@ -1,6 +1,7 @@
 import routes from "../utils/routes.js";
 import fetch from "../utils/fetch-util.js";
 import MapComponent from "./MapComponent.js";
+import Utils from "../utils/Utils.js";
 
 // componente do formulario para simular busca por distância
 export default new (class SimulateQueryFromDistanceFormComponent {
@@ -12,6 +13,10 @@ export default new (class SimulateQueryFromDistanceFormComponent {
 
   toggleVisibility(){
     this.#formElement.classList.toggle("d-none");
+  }
+
+  isHide(){
+    return this.#formElement.classList.contains("d-none")
   }
 
   listenSubmit() {
@@ -53,12 +58,13 @@ export default new (class SimulateQueryFromDistanceFormComponent {
 
     const result = await fetch.getRequest(urlWithQueryStrings);
 
-    if (result.success && result.data.length) {
+    if (result.success && result.data.value) {
       const real = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
         currency: 'BRL',
         });
-      const notif = `O valor da área é: ${real.format(result.data[0].value)}`
+        const durationFmt = Utils.formDurationInMinutes(result.data.durationInMinutes)
+      const notif = `Valor: ${real.format(result.data.value)}\nDistancia: ${result.data.distanceInKm}KM\nDuração Apróx.: ${durationFmt}`
       alert(notif)
       //   window.location.reload()
       return true;

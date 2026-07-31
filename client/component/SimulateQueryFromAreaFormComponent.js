@@ -18,6 +18,10 @@ export default new (class SimulateQueryFromAreaFormComponent {
     this.#formElement.addEventListener("submit", this.handleSubmit.bind(this));
   }
 
+  isHide(){
+    return this.#formElement.classList.contains("d-none")
+  }
+
   async handleSubmit(e) {
     e.preventDefault();
 
